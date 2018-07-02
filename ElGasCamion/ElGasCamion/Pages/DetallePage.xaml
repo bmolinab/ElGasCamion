@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ElGasCamion.Pages.DetallePage">
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Label Text="Nombres"/>
+            <Entry Text="{Binding Detalle.NombreCliente}"></Entry>
+            <Label Text="Dirección"/>
+            <Entry Text="{Binding Direccion}"></Entry>
+            <Label Text="Télefono"/>
+            <Entry Text="{Binding Detalle.Telefono}"></Entry>
+            <Label Text="Nro. de tanques a entregar"/>
+            <Entry Text="{Binding Detalle.Cantidad}"></Entry>
+            <Label Text="Valor a cobrar"/>
+            <Entry Text="{Binding Detalle.ValorTotal}"></Entry>
+            <Button Text="ENTREGAR" BackgroundColor="Cyan" TextColor="White" HorizontalOptions="Center" Command="{Binding OkCommand}"/>
+
+            <Button Text="CANCELAR" BackgroundColor="Cyan" TextColor="White" HorizontalOptions="Center"/>
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

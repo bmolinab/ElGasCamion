@@ -1,5 +1,4 @@
-﻿using ElGasCamion.Interface;
-using ElGasCamion.ViewModels;
+﻿using ElGasCamion.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +11,14 @@ using Xamarin.Forms.Xaml;
 namespace ElGasCamion.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class MapaPage : ContentPage
+	public partial class DetallePage : ContentPage
 	{
-        MapaViewModel viewModel = new MapaViewModel();
-        public MapaPage()
-        {
-            InitializeComponent();
+        DetalleViewModel viewModel = new DetalleViewModel();
+
+        public DetallePage ()
+		{
+			InitializeComponent ();
             BindingContext = viewModel;
-           
-
-        }
-
-        
+		}
 	}
 }

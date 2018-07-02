@@ -2,8 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:tk="clr-namespace:TK.CustomMap;assembly=TK.CustomMap"
+              xmlns:dsControl="clr-namespace:ElGasCamion.Controls"
              x:Class="ElGasCamion.Pages.MapaPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem2" Order="Primary" Text="Nº tanques vendidos" Priority="0" />
+        <ToolbarItem Name="MenuItem1" Order="Primary" Text="{Binding Vendidos}" Priority="0" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
+        
         <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <tk:TKCustomMap 
                 VerticalOptions="FillAndExpand"
@@ -12,7 +18,20 @@
                 MinimumWidthRequest="300"
                 IsShowingUser="True"                
                 MapType="Street"
+                Pins="{Binding Locations}" 
+                PinSelectedCommand="{Binding PinSelected}"           
+                MapClickedCommand="{Binding PinUnselected}"
+                SelectedPin="{Binding MyPin}" 
                 />
+            <dsControl:FilterMenu x:Name="Menu" 
+                                  IsVisible="{Binding VerMenu}"
+                                  Command="{Binding ItemSelected}"
+                                  Text="{Binding Path=BindingContext.TapItem, Mode=TwoWay}"
+                                  HorizontalOptions="Center" 
+                                  VerticalOptions="End" 
+                                  TranslationY="48" 
+                                  >
+            </dsControl:FilterMenu>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

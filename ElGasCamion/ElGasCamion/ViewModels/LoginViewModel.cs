@@ -1,7 +1,9 @@
 ﻿using ElGasCamion.Helpers;
+using ElGasCamion.Models;
 using ElGasCamion.Pages;
 using ElGasCamion.Services;
 using GalaSoft.MvvmLight.Command;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -54,8 +56,11 @@ namespace ElGasCamion.ViewModels
                     {
                         Settings.AccessToken = accesstoken;
 
-                        
-                        var idDistribuidor = await _apiServices.LoginAsync(Username, Password);
+
+                        var d = new Distribuidor { Correo = Username };
+                        var response = await ApiServices.InsertarAsync<Distribuidor>(d, new System.Uri(Constants.BaseApiAddress), "/api/Distribuidors/GetDistribuidorData");
+                        var cliente = JsonConvert.DeserializeObject<Distribuidor>(response.Result.ToString());
+                        Settings.IdDistribuidor = cliente.IdDistribuidor;
 
                         App.Current.MainPage = new NavigationPage(new MapaPage());
                     }

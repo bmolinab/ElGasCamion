@@ -1,5 +1,7 @@
 using ElGasCamion.Helpers;
+using ElGasCamion.Models;
 using ElGasCamion.Pages;
+using ElGasCamion.Services;
 using ElGasCamion.ViewModels;
 using System;
 using Xamarin.Forms;
@@ -10,12 +12,16 @@ namespace ElGasCamion
 {
 	public partial class App : Application
 	{
+        public static MasterPage Master { get; internal set; }
         public static NavigationPage Navigator { get; internal set; }
+        public static CompraResponse clienteseleccionado { get; internal set; }
 
         public App ()
 		{
 			InitializeComponent();
-            SetMainPage();
+
+            NavigationService navigationService = new NavigationService();
+            navigationService.SetMainPage();
 
             //MainPage = new MainPage();
         }
