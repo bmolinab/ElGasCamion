@@ -40,6 +40,10 @@
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- Other properties -->
+    <AndroidErrorOnCustomJavaObject>false</AndroidErrorOnCustomJavaObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
     <Reference Include="System" />
@@ -72,6 +76,12 @@
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>4.0.0.10-beta</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.Azure.NotificationHubs.Android">
+      <Version>0.4.0</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Firebase.Messaging">
+      <Version>60.1142.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="3.0.0.482510" />
     <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2" />
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2" />
@@ -82,30 +92,34 @@
       <Version>3.0.0.482510</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Base">
-      <Version>42.1021.0</Version>
+      <Version>60.1142.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Basement">
-      <Version>42.1021.0</Version>
+      <Version>60.1142.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Gcm">
-      <Version>42.1001.0</Version>
+      <Version>60.1142.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Location">
-      <Version>42.1021.0</Version>
+      <Version>60.1142.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Maps">
-      <Version>42.1021.0</Version>
+      <Version>60.1142.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Tasks">
-      <Version>42.1021.0</Version>
+      <Version>60.1142.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="MyFirebaseIIDService.cs" />
+    <Compile Include="MyFirebaseMessagingService.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <GoogleServicesJson Include="google-services.json" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
