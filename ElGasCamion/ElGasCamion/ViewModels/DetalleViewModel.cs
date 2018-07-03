@@ -9,12 +9,17 @@ using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
 using TK.CustomMap;
+using TK.CustomMap.Api;
+using TK.CustomMap.Overlays;
+using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 
 namespace ElGasCamion.ViewModels
 {
     public class DetalleViewModel : INotifyPropertyChanged
     {
+        
+
         public event PropertyChangedEventHandler PropertyChanged;
         private CompraResponse detalle = new  CompraResponse();
         public CompraResponse Detalle
@@ -32,10 +37,7 @@ namespace ElGasCamion.ViewModels
 
         }
 
-
         Geocoder geoCoder;
-
-
 
         public DetalleViewModel()
         {
@@ -50,14 +52,12 @@ namespace ElGasCamion.ViewModels
         {
             var position = new Xamarin.Forms.Maps.Position(Detalle.Latitud.Value, Detalle.Longitud.Value);
             var possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
-            
-           
+                       
             foreach (var address in possibleAddresses)
             {
                 Direccion = address;
                 break;
             }
-
         }
 
         public ICommand OkCommand { get { return new RelayCommand(Ok); } }

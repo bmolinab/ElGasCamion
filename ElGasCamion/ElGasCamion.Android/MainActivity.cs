@@ -18,7 +18,8 @@ namespace ElGasCamion.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-            TKGoogleMaps.Init(this, bundle);
+             TKGoogleMaps.Init(this, bundle);
+          
 
             base.OnCreate(bundle);
 

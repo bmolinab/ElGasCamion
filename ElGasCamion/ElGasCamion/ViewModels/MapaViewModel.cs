@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.Command;
 using Newtonsoft.Json;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
+using Plugin.Messaging;
 using Plugin.Permissions.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,46 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using TK.CustomMap;
+using TK.CustomMap.Api;
+using TK.CustomMap.Api.Google;
+using TK.CustomMap.Overlays;
 using Xamarin.Forms;
 
 namespace ElGasCamion.ViewModels
 {
     public class MapaViewModel: INotifyPropertyChanged
     {
+
+
+
+        //public ObservableCollection<TKRoute> routes;
+        //public ObservableCollection<TKRoute> Routes
+        //{
+        //    protected set
+        //    {
+        //        routes = value;
+        //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Routes"));
+        //    }
+        //    get { return routes; }
+        //}
+
+        public ObservableCollection<TKRoute> Routes { get; set; }
+
+        public MapSpan centerSearch = null;
+        public MapSpan CenterSearch
+        {
+            get { return centerSearch; }
+            set
+            {
+                if (this.centerSearch != value)
+                {
+
+                    this.centerSearch = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CenterSearch"));
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public ObservableCollection<TKCustomMapPin> locations;
         public ObservableCollection<TKCustomMapPin> Locations
@@ -48,6 +83,7 @@ namespace ElGasCamion.ViewModels
                 }
             }
         }
+
 
         public bool verMenu=false;
 
@@ -81,6 +117,10 @@ namespace ElGasCamion.ViewModels
         {
             Locations = new ObservableCollection<TKCustomMapPin>();
             locations = new ObservableCollection<TKCustomMapPin>();
+            Routes = new ObservableCollection<TKRoute>();
+          
+            vendidos = "";
+          //  Vendidos = "12";
 
             myposition();
             EntregasPendientes();
@@ -106,11 +146,24 @@ namespace ElGasCamion.ViewModels
         {
             try
             {
-                vendidos = "";
-                Vendidos = "12";
                 var hasPermission = await Utils.CheckPermissions(Permission.Location);
+
+            
                 if (!hasPermission)
                     return;
+
+                var locator = CrossGeolocator.Current;
+                locator.DesiredAccuracy = 10;//DesiredAccuracy.Value;
+
+                var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(4), null, true);
+                if (position == null)
+                {
+                    Debug.WriteLine("null gps :(");
+                    return;
+                }
+                CenterSearch = (MapSpan.FromCenterAndRadius((new TK.CustomMap.Position(position.Latitude, position.Longitude)), Distance.FromMiles(1)));
+
+
 
                 if (tracking)
                 {
@@ -122,8 +175,8 @@ namespace ElGasCamion.ViewModels
                     CrossGeolocator.Current.PositionChanged += CrossGeolocator_Current_PositionChanged;
                     CrossGeolocator.Current.PositionError += CrossGeolocator_Current_PositionError;
                 }
+              
 
-               
 
                 if (CrossGeolocator.Current.IsListening)
                 {
@@ -199,12 +252,39 @@ namespace ElGasCamion.ViewModels
             switch (TapItem)
             {
                 case "Llamar":
+                    var cliente = ListaClientes.Where(x => x.NombreCliente == MyPin.Title).FirstOrDefault();
+
+                    var PhoneCallTask = CrossMessaging.Current.PhoneDialer;
+                    if (PhoneCallTask.CanMakePhoneCall)
+                    {
+                        PhoneCallTask.MakePhoneCall(cliente.Telefono, cliente.NombreCliente);
+                    }
                     break;
                 case "Vender":
                    App.clienteseleccionado = ListaClientes.Where(x => x.NombreCliente == MyPin.Title).FirstOrDefault();
                     await App.Navigator.PushAsync(new DetallePage());
                     break;
                 case "Ruta":
+                    Routes.Clear();
+                    TKRoute route = new TKRoute
+                    {
+                        TravelMode = TKRouteTravelMode.Driving,
+                        Source = CenterSearch.Center,
+                        Destination = MyPin.Position,
+                        
+                        Color = Color.Blue,                       
+                    };
+
+
+
+                   
+
+
+
+
+                   Routes.Add(route);
+                    Debug.WriteLine(route.Distance);
+                    Routes.Count();
                     break;
             }
 

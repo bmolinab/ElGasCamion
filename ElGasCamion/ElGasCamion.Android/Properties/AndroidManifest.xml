@@ -13,6 +13,9 @@
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   
 	<application android:label="ElGasCamion.Android">
-    <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyDJSgHjIGuRD7kTxiaZKl7V5ugWMFJpu5s" />
+    <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDAmhu79jCKlkE6KIVSqgxlIl83gJj_rkk" />
+
+    
+
   </application>
 </manifest>

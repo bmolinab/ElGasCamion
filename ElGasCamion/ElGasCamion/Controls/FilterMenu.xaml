@@ -14,10 +14,10 @@
             <Image x:Name="Dir" Opacity="0" Margin="0,0,90,90" Source="ic_direction" WidthRequest="38" HeightRequest="38" VerticalOptions="Center" HorizontalOptions="Center"></Image>
 
             <!-- NE -->
-            <Image x:Name="Chck" Opacity="0" Margin="90,0,0,90" Source="ic_check" WidthRequest="38" HeightRequest="38" VerticalOptions="Center" HorizontalOptions="Center"></Image>
+            <Image x:Name="Chck" Opacity="0" Margin="90,0,0,90" Source="ic_pay" WidthRequest="38" HeightRequest="38" VerticalOptions="Center" HorizontalOptions="Center"></Image>
 
             <!-- N -->
-            <Image x:Name="Dte" Opacity="0" Margin="0,0,0,130" Source="ic_date" WidthRequest="38" HeightRequest="38" VerticalOptions="Center" HorizontalOptions="Center"></Image>
+            <Image x:Name="Dte" Opacity="0" Margin="0,0,0,130" Source="ic_call" WidthRequest="38" HeightRequest="38" VerticalOptions="Center" HorizontalOptions="Center"></Image>
 
         </Grid>
     </ContentView.Content>

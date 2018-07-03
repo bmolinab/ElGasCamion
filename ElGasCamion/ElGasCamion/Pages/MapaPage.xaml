@@ -12,6 +12,7 @@
         
         <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <tk:TKCustomMap 
+                x:Name="mymap"
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand"
                 MinimumHeightRequest="300"  
@@ -22,6 +23,9 @@
                 PinSelectedCommand="{Binding PinSelected}"           
                 MapClickedCommand="{Binding PinUnselected}"
                 SelectedPin="{Binding MyPin}" 
+                Routes="{Binding Routes}"
+                RouteCalculationFinished="TKCustomMap_RouteCalculationFinished"
+                RouteCalculationFailed="TKCustomMap_RouteCalculationFailed"
                 />
             <dsControl:FilterMenu x:Name="Menu" 
                                   IsVisible="{Binding VerMenu}"

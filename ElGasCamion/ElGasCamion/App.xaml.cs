@@ -4,6 +4,7 @@ using ElGasCamion.Pages;
 using ElGasCamion.Services;
 using ElGasCamion.ViewModels;
 using System;
+using TK.CustomMap.Api.Google;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,6 +20,9 @@ namespace ElGasCamion
         public App ()
 		{
 			InitializeComponent();
+
+            GmsPlace.Init("AIzaSyDAmhu79jCKlkE6KIVSqgxlIl83gJj_rkk");
+            GmsDirection.Init("AIzaSyDAmhu79jCKlkE6KIVSqgxlIl83gJj_rkk");
 
             NavigationService navigationService = new NavigationService();
             navigationService.SetMainPage();
