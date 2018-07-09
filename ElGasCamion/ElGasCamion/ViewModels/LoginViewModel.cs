@@ -57,12 +57,13 @@ namespace ElGasCamion.ViewModels
                         Settings.AccessToken = accesstoken;
 
 
-                        var d = new Distribuidor { Correo = Username };
+                        var d = new Distribuidor { Correo = Username, DeviceID = Settings.DeviceID };
                         var response = await ApiServices.InsertarAsync<Distribuidor>(d, new System.Uri(Constants.BaseApiAddress), "/api/Distribuidors/GetDistribuidorData");
                         var cliente = JsonConvert.DeserializeObject<Distribuidor>(response.Result.ToString());
                         Settings.IdDistribuidor = cliente.IdDistribuidor;
 
                         App.Current.MainPage = new NavigationPage(new MapaPage());
+
                     }
 
                 });

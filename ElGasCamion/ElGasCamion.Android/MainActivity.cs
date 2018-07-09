@@ -9,6 +9,11 @@ using Android.OS;
 using TK.CustomMap.Droid;
 using Plugin.Permissions;
 using Android.Util;
+using WindowsAzure.Messaging;
+using Firebase.Iid;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Firebase.Messaging;
 
 namespace ElGasCamion.Droid
 {
@@ -16,6 +21,8 @@ namespace ElGasCamion.Droid
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         public const string TAG = "MainActivity";
+        const string TAG2 = "MyFirebaseIIDService";
+        NotificationHub hub;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -26,7 +33,7 @@ namespace ElGasCamion.Droid
 
             base.OnCreate(bundle);
 
-            if (Intent.Extras != null)
+            if (Intent.Extras != null )
             {
                 foreach (var key in Intent.Extras.KeySet())
                 {
@@ -37,13 +44,22 @@ namespace ElGasCamion.Droid
                     }
                 }
             }
-
-
-            global::Xamarin.Forms.Forms.Init(this, bundle);
+          
+           global::Xamarin.Forms.Forms.Init(this, bundle);
             Xamarin.FormsMaps.Init(this, bundle);
 
+
+     
+
+
+
             LoadApplication(new App());
+
+           
         }
+
+
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);

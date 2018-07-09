@@ -26,6 +26,43 @@ namespace ElGasCamion.Helpers
                 AppSettings.AddOrUpdateValue("Username", value);
             }
         }
+
+        public static int IdCompra
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault("IdCompra", 0);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue("IdCompra", value);
+            }
+        }
+
+        public static bool VenderGas
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault("VenderGas", false);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue("VenderGas", value);
+            }
+        }
+
+        public static string DeviceID
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault("DeviceID", "");
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue("DeviceID", value);
+            }
+        }
+
         public static string Password
         {
             get

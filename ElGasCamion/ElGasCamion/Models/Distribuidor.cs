@@ -25,5 +25,8 @@ namespace ElGasCamion.Models
         public int? IdTipoSuscripcion { get; set; }
 
         public string IdAspNetUser { get; set; }
+
+        public string DeviceID { get; set; }
+
     }
 }

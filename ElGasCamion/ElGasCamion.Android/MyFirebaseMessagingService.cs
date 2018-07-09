@@ -13,6 +13,8 @@ using Android.Widget;
 
 using Android.Util;
 using Firebase.Messaging;
+using Android.Media;
+using Android.Graphics;
 
 namespace ElGasCamion.Droid
 {
@@ -24,6 +26,7 @@ namespace ElGasCamion.Droid
         public override void OnMessageReceived(RemoteMessage message)
         {
             Log.Debug(TAG, "From: " + message.From);
+           
             if (message.GetNotification() != null)
             {
                 //These is how most messages will be received
@@ -33,7 +36,20 @@ namespace ElGasCamion.Droid
             else
             {
                 //Only used for debugging payloads sent from the Azure portal
-                SendNotification(message.Data.Values.First());
+                string msg = message.Data["message"];
+                string tipo= message.Data["tipo"];
+                string idcompra = message.Data["idCompra"];
+
+                switch (tipo)
+                {
+                    case "1":
+                        Helpers.Settings.VenderGas = true;
+                        Helpers.Settings.IdCompra = int.Parse(idcompra);
+
+                    break;
+                }
+
+                SendNotification(msg);
 
             }
 
@@ -44,17 +60,23 @@ namespace ElGasCamion.Droid
             var intent = new Intent(this, typeof(MainActivity));
             intent.AddFlags(ActivityFlags.ClearTop);
             var pendingIntent = PendingIntent.GetActivity(this, 0, intent, PendingIntentFlags.OneShot);
+            long[] v = { 500, 1000 };
 
             var notificationBuilder = new Notification.Builder(this)
-                        .SetContentTitle("FCM Message")
+                        .SetContentTitle("El Gas")
                         .SetSmallIcon(Resource.Drawable.ic_launcher)
                         .SetContentText(messageBody)
                         .SetAutoCancel(true)
-                        .SetContentIntent(pendingIntent);
+                        .SetContentIntent(pendingIntent)
+                        .SetVibrate(v)
+                        .SetSound(RingtoneManager.GetDefaultUri(RingtoneType.Notification))
+
+            ;
 
             var notificationManager = NotificationManager.FromContext(this);
+           
 
-            notificationManager.Notify(0, notificationBuilder.Build());
+            notificationManager.Notify(1, notificationBuilder.Build());
         }
     }
 }

@@ -19,11 +19,14 @@
                 MinimumWidthRequest="300"
                 IsShowingUser="True"                
                 MapType="Street"
+                MapRegion="{Binding CenterSearch}"
                 Pins="{Binding Locations}" 
                 PinSelectedCommand="{Binding PinSelected}"           
                 MapClickedCommand="{Binding PinUnselected}"
                 SelectedPin="{Binding MyPin}" 
+                Circles="{Binding TkCircle}"
                 Routes="{Binding Routes}"
+                
                 RouteCalculationFinished="TKCustomMap_RouteCalculationFinished"
                 RouteCalculationFailed="TKCustomMap_RouteCalculationFailed"
                 />
@@ -36,6 +39,11 @@
                                   TranslationY="48" 
                                   >
             </dsControl:FilterMenu>
+            <StackLayout BackgroundColor="White" IsVisible="{Binding VerCompra}" Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Start" >
+                <Button Text="Aplicar" Command="{Binding AplicarCommand}"></Button>
+                <Button Text="No Aplicar" Command="{Binding NoAplicarCommand}"></Button>
+            </StackLayout>
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>

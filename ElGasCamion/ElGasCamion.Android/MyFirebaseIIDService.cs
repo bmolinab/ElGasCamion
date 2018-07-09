@@ -24,10 +24,17 @@ namespace ElGasCamion.Droid
 
         public override void OnTokenRefresh()
         {
-            var refreshedToken = FirebaseInstanceId.Instance.Token;
-            Log.Debug(TAG, "FCM token: " + refreshedToken);
-            SendRegistrationToServer(refreshedToken);
+            
+                var refreshedToken = FirebaseInstanceId.Instance.Token;
+                Log.Debug(TAG, "FCM token: " + refreshedToken);
+                
+                Helpers.Settings.DeviceID = refreshedToken;
+
+                SendRegistrationToServer(refreshedToken);
+            
+          
         }
+      
 
         void SendRegistrationToServer(string token)
         {
@@ -35,8 +42,11 @@ namespace ElGasCamion.Droid
             hub = new NotificationHub(Constants.NotificationHubName,
                                       Constants.ListenConnectionString, this);
 
-            var tags = new List<string>() { };
-            var regID = hub.Register(token, tags.ToArray()).RegistrationId;
+            var tags = new List<string>() {};
+            tags.Add("camion");
+           
+
+                var regID = hub.Register(token, tags.ToArray()).RegistrationId;
 
             Log.Debug(TAG, $"Successful registration of ID {regID}");
         }
