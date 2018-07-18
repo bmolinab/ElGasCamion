@@ -15,11 +15,27 @@
             <Entry Text="{Binding Detalle.Cantidad}"></Entry>
             <Label Text="Valor a cobrar"/>
             <Entry Text="{Binding Detalle.ValorTotal}"></Entry>
-            <Button Text="ENTREGAR" BackgroundColor="Cyan" TextColor="White" HorizontalOptions="Center" Command="{Binding OkCommand}"/>
 
-            <Button Text="CANCELAR" BackgroundColor="Cyan" TextColor="White" HorizontalOptions="Center"/>
+            <Button BorderRadius="30" 
+                        Text="ENTREGAR" 
+                        VerticalOptions="End" 
+                        HorizontalOptions="Center" 
+                        WidthRequest="200"  
+                        HeightRequest="50" 
+                        BackgroundColor="Blue" 
+                        TextColor="White" 
+                        Command="{Binding OkCommand}"/>
 
-
+            <!--<Button BorderRadius="30" 
+                        Text="CANCELAR" 
+                        VerticalOptions="End" 
+                        HorizontalOptions="Center" 
+                        WidthRequest="200"  
+                        HeightRequest="50" 
+                        BackgroundColor="Blue" 
+                        TextColor="White" 
+                        Command="{Binding OkCommand}"/>-->
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

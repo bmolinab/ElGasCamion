@@ -27,12 +27,8 @@ namespace ElGasCamion.Droid
             
                 var refreshedToken = FirebaseInstanceId.Instance.Token;
                 Log.Debug(TAG, "FCM token: " + refreshedToken);
-                
-                Helpers.Settings.DeviceID = refreshedToken;
-
-                SendRegistrationToServer(refreshedToken);
-            
-          
+           Helpers.Settings.DeviceID = refreshedToken;
+                SendRegistrationToServer(refreshedToken);                     
         }
       
 

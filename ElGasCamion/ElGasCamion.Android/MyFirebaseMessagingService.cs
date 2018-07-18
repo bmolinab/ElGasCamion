@@ -39,12 +39,14 @@ namespace ElGasCamion.Droid
                 string msg = message.Data["message"];
                 string tipo= message.Data["tipo"];
                 string idcompra = message.Data["idCompra"];
+                
 
                 switch (tipo)
                 {
                     case "1":
                         Helpers.Settings.VenderGas = true;
                         Helpers.Settings.IdCompra = int.Parse(idcompra);
+
 
                     break;
                 }

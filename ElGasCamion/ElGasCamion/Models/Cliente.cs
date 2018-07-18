@@ -16,6 +16,8 @@ namespace ElGasCamion.Models
         public string Telefono { get; set; }
         public string Correo { get; set; }
         public string IdAspNetUser { get; set; }
+        public string DeviceID { get; set; }
+
 
     }
 }

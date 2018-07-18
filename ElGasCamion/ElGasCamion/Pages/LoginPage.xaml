@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             NavigationPage.HasNavigationBar="False"
              x:Class="ElGasCamion.Pages.LoginPage">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -154,8 +155,8 @@
                             Style="{StaticResource LogoStyle}">
                             <Image.Source>
                                 <OnPlatform x:TypeArguments="ImageSource">
-                                    <On Platform="Android, iOS" Value="ic_launcher.png" />
-                                    <On Platform="UWP" Value="Assets/ic_launcher.png" />
+                                    <On Platform="Android, iOS" Value="ElGas.png" />
+                                    <On Platform="UWP" Value="Assets/ElGas.png" />
                                 </OnPlatform>
                             </Image.Source>
                         </Image>
@@ -168,6 +169,7 @@
                     <Entry
                         Grid.Row="2"
                         AutomationId="username"
+                        Keyboard="Email"
                         Text="{Binding Username, Mode=TwoWay}">
                         <Entry.TextColor>
                             <OnPlatform x:TypeArguments="Color">
@@ -236,12 +238,13 @@
                     <Frame
                         HasShadow="True"
                         Padding="0"
-                        CornerRadius="2">
+                        CornerRadius="30"
+                        >
                         <Button 
                             Text="Ingresar"
                             Command="{Binding LoginCommand}"
                             BackgroundColor="{StaticResource WhiteColor}"
-                            TextColor="{StaticResource OrangeColor}" />
+                            TextColor="{StaticResource OrangeColor}" BorderRadius="30" />
                     </Frame>
                     <Label 
                         Text="o"
@@ -252,7 +255,9 @@
                         Text="Registrate"
                         BackgroundColor="{StaticResource BlueColor}"
                         Command="{Binding RegisterCommand}"
-                        TextColor="{StaticResource WhiteColor}" />
+                        TextColor="{StaticResource WhiteColor}" 
+                        BorderRadius="30" 
+                        />
                 </StackLayout>
             </Grid>
             <ActivityIndicator 

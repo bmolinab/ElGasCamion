@@ -26,6 +26,7 @@ namespace ElGasCamion.ViewModels
 {
     public class MapaViewModel: INotifyPropertyChanged
     {
+        public Compra compraresult = new Compra();
         public ObservableCollection<TKRoute> Routes { get; set; }
         ApiServices apiServices = new ApiServices();
         public MapSpan centerSearch = null;
@@ -153,10 +154,11 @@ namespace ElGasCamion.ViewModels
             };
 
             var response = await ApiServices.InsertarAsync<Compra>(compra, new Uri(Constants.BaseApiAddress), "/api/Compras/GetCompra");
-            var compraresult = JsonConvert.DeserializeObject<Compra>(response.Result.ToString());
-
+             compraresult = JsonConvert.DeserializeObject<Compra>(response.Result.ToString());
+            var color = new Color(0, 0, 255, 0.3);
             TK.CustomMap.Position centro = new TK.CustomMap.Position(latitude: compraresult.Latitud.Value,longitude:compraresult.Longitud.Value);
-            var circle = new TKCircle { Radius = 1000, Center = centro, Color = Color.Red, StrokeColor = Color.Black };
+            var circle = new TKCircle { Radius = 700, Center = centro, Color = color};
+            
             TkCircle.Add(circle);
             VerCompra = true;
         }
@@ -243,16 +245,15 @@ namespace ElGasCamion.ViewModels
             var response = await ApiServices.InsertarAsync<Distribuidor>(distribuidor, new Uri(Constants.BaseApiAddress), "/api/Compras/MisVentasPendientes");
             ListaClientes = JsonConvert.DeserializeObject<List<CompraResponse>>(response.Result.ToString());
 
-            Point p = new Point(0.48, 0.96);
             foreach (var cliente in ListaClientes)
             {
                 var Pindistribuidor = new TKCustomMapPin
                 {
-                    Image = "cliente01",
+                    Image = "pincliente",
                     Position = new TK.CustomMap.Position((double)cliente.Latitud, (double)cliente.Longitud),
                     Title = cliente.NombreCliente + "",
                     Subtitle ="Nro tanques: "+ cliente.Cantidad,
-                    Anchor = p,
+                    Anchor = new Point(0.48, 0.96),
                     ShowCallout = true,
                 };
                 Locations.Add(Pindistribuidor);
@@ -292,7 +293,8 @@ namespace ElGasCamion.ViewModels
                         TravelMode = TKRouteTravelMode.Driving,
                         Source = CenterSearch.Center,
                         Destination = MyPin.Position,                        
-                        Color = Color.Blue,                       
+                        Color = Color.Blue,    
+                        LineWidth=5
                     };
                     Routes.Add(route);
                     Debug.WriteLine(route.Distance);
@@ -321,10 +323,9 @@ namespace ElGasCamion.ViewModels
         {
             try
             {
-                var compra = new Compra{IdCompra = Settings.IdCompra};
-                var response = await ApiServices.InsertarAsync<Compra>(compra, new Uri(Constants.BaseApiAddress), "/api/Compras/Aplicar");
+                compraresult.IdDistribuidor = Settings.IdDistribuidor;
+                var response = await ApiServices.InsertarAsync<Compra>(compraresult, new Uri(Constants.BaseApiAddress), "/api/Compras/Aplicar");
             //    var compraresult = JsonConvert.DeserializeObject<Compra>(response.Result.ToString());
-
                 if(response.IsSuccess)
                 {
                     Settings.VenderGas = false;
@@ -333,7 +334,6 @@ namespace ElGasCamion.ViewModels
                     VerCompra = false;
                     EntregasPendientes();
                 }
-
 
                 // App.clienteseleccionado = null;
             }
@@ -373,7 +373,8 @@ namespace ElGasCamion.ViewModels
                 {
                     IdDistribuidor = Settings.IdDistribuidor,
                     Latitud = e.Position.Latitude,
-                    Longitud = e.Position.Longitude,                   
+                    Longitud = e.Position.Longitude,  
+                    
                 });
             });
         }
