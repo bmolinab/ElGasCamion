@@ -17,7 +17,7 @@ using Firebase.Messaging;
 
 namespace ElGasCamion.Droid
 {
-    [Activity(Label = "ElGasCamion", Icon = "@drawable/ic_launcher", Theme = "@style/MyTheme.Splash", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "ElGas Distribuidor", Icon = "@drawable/ic_launcher", Theme = "@style/MyTheme.Splash", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         public const string TAG = "MainActivity";
