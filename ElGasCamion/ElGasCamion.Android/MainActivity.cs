@@ -14,6 +14,9 @@ using Firebase.Iid;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Firebase.Messaging;
+using Android.Support.V4.Content;
+using Android.Support.V4.App;
+using Android;
 
 namespace ElGasCamion.Droid
 {
@@ -46,7 +49,10 @@ namespace ElGasCamion.Droid
             }
           
            global::Xamarin.Forms.Forms.Init(this, bundle);
+            LeoJHarris.FormsPlugin.Droid.EnhancedEntryRenderer.Init(this);
+
             Xamarin.FormsMaps.Init(this, bundle);
+
 
 
      
@@ -56,6 +62,20 @@ namespace ElGasCamion.Droid
             LoadApplication(new App());
 
            
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
+            {
+                ActivityCompat.RequestPermissions(this, new String[] { Manifest.Permission.AccessCoarseLocation, Manifest.Permission.AccessFineLocation }, 0);
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Permission Granted!!!");
+            }
         }
 
 

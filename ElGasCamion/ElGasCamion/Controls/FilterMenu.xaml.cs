@@ -48,7 +48,7 @@ namespace ElGasCamion.Controls
                 InnerButtonClose.RotateTo(360, _animationDelay);
                 InnerButtonClose.FadeTo(1, _animationDelay);
 
-                await OuterCircle.ScaleTo(3.3, 1000, Easing.BounceIn);
+                await OuterCircle.ScaleTo(4, 1000, Easing.BounceIn);
                 await ShowButtons();
                 InnerButtonMenu.IsVisible = false;
 
@@ -185,7 +185,7 @@ namespace ElGasCamion.Controls
                         InnerButtonClose.RotateTo(360, _animationDelay);
                         InnerButtonClose.FadeTo(1, _animationDelay);
 
-                        await OuterCircle.ScaleTo(3.3, 1000, Easing.BounceIn);
+                        await OuterCircle.ScaleTo(4, 1000, Easing.BounceIn);
                         await ShowButtons();
                         InnerButtonMenu.IsVisible = false;
 

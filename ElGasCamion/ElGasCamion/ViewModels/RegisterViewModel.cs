@@ -99,48 +99,54 @@ namespace ElGasCamion.ViewModels
                 {
                     IsBusy = true;
 
-                    var hasStrong = new Regex(@"^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!*@#$%^&+=_]).*$");
-                    if(Password==ConfirmPassword)
-                    {
-                        if (Password == null) Password = "";
-                        var isValidated = hasStrong.IsMatch(Password);
-                        if (isValidated)
+
+                if (Password != null && Password != "")
+                {
+                        if (ConfirmPassword == Password)
                         {
-                            var isRegistered = await _apiServices.RegisterUserAsync
-                            
-                           (Username, Password, ConfirmPassword, distribuidor);
-
-                            Settings.Username = Username;
-                            Settings.Password = Password;
-
-                            if (isRegistered)
+                            if (Password.Length > 3)
                             {
-                                IsBusy = false;
+                                var isRegistered = await _apiServices.RegisterUserAsync
 
-                                Message = "Se registró con éxito";
-                                await App.Current.MainPage.DisplayAlert("El Gas", Message, "Aceptar");
-                                App.Current.MainPage = new NavigationPage(new LoginPage());
+                               (Username, Password, ConfirmPassword, distribuidor);
+
+                                Settings.Username = Username;
+                                Settings.Password = Password;
+
+                                if (isRegistered)
+                                {
+                                    IsBusy = false;
+
+                                    Message = "Se registró con éxito";
+                                    await App.Current.MainPage.DisplayAlert("El Gas", Message, "Aceptar");
+                                    App.Current.MainPage = new NavigationPage(new LoginPage());
+                                }
+                                else
+                                {
+                                    IsBusy = false;
+                                    Message = "Error al registrar su cuenta, reintentelo";
+                                    await App.Current.MainPage.DisplayAlert("El Gas", Message, "Aceptar");
+                                }
                             }
                             else
                             {
-                                IsBusy = false;
-                                Message = "Error al registrar su cuenta, reintentelo";
-                                await App.Current.MainPage.DisplayAlert("El Gas", Message, "Aceptar");
+                                await App.Current.MainPage.DisplayAlert("Error", "Las contraseña debe tener al menos 4 caracteres", "Aceptar");
+
                             }
                         }
                         else
                         {
-                            IsBusy = false;
-                            Message = "La contraseña debe tener 8-16 caracteres e incluir al menos una minúscula, una mayúscula, un número y un caracter especial";
-                            IsError = true;
+                            await App.Current.MainPage.DisplayAlert("Error", "Las contraseñas no coinciden", "Aceptar");
                         }
+
                     }
                     else
                     {
-                        IsBusy = false;
-                        Message = "Las contraseñas no coincide";
-                        IsError = true;
+                        await App.Current.MainPage.DisplayAlert("Error", "Todos los campos son obligatorios", "Aceptar");
+
                     }
+
+
 
 
 

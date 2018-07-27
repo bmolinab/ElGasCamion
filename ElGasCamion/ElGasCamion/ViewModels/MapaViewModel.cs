@@ -145,6 +145,21 @@ namespace ElGasCamion.ViewModels
             EntregasPendientes();
         }
 
+        public void OnAppearing()
+        {
+
+            Locations = new ObservableCollection<TKCustomMapPin>();
+            locations = new ObservableCollection<TKCustomMapPin>();
+
+
+            centerSearch = (MapSpan.FromCenterAndRadius((new TK.CustomMap.Position(0, 0)), Distance.FromMiles(.3)));
+
+            EntregasPendientes();
+            //Do whatever you like in here
+
+        }
+
+
         public async void dondeVender()
         {
             var compra = new Compra
@@ -244,6 +259,7 @@ namespace ElGasCamion.ViewModels
             };            
             var response = await ApiServices.InsertarAsync<Distribuidor>(distribuidor, new Uri(Constants.BaseApiAddress), "/api/Compras/MisVentasPendientes");
             ListaClientes = JsonConvert.DeserializeObject<List<CompraResponse>>(response.Result.ToString());
+            Point p = new Point(0.48, 0.96);
 
             foreach (var cliente in ListaClientes)
             {
@@ -253,7 +269,7 @@ namespace ElGasCamion.ViewModels
                     Position = new TK.CustomMap.Position((double)cliente.Latitud, (double)cliente.Longitud),
                     Title = cliente.NombreCliente + "",
                     Subtitle ="Nro tanques: "+ cliente.Cantidad,
-                    Anchor = new Point(0.48, 0.96),
+                    Anchor = p,                   
                     ShowCallout = true,
                 };
                 Locations.Add(Pindistribuidor);

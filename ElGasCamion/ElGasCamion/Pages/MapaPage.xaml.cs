@@ -22,6 +22,17 @@ namespace ElGasCamion.Pages
             BindingContext = viewModel;          
         }
 
+        
+
+        protected override void OnAppearing()
+        {
+           // base.OnAppearing();
+            viewModel = new MapaViewModel();
+            BindingContext = viewModel;
+
+            //your code here;
+
+        }
 
         private void TKCustomMap_RouteCalculationFinished(object sender, TK.CustomMap.TKGenericEventArgs<TK.CustomMap.Overlays.TKRoute> e)
         {

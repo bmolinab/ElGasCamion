@@ -5,16 +5,16 @@
     <ContentPage.Content>
         <StackLayout>
 
-            <Label Text="Nombres"/>
-            <Entry Text="{Binding Detalle.NombreCliente}"></Entry>
-            <Label Text="Dirección"/>
-            <Entry Text="{Binding Direccion}"></Entry>
-            <Label Text="Télefono"/>
-            <Entry Text="{Binding Detalle.Telefono}"></Entry>
-            <Label Text="Nro. de tanques a entregar"/>
-            <Entry Text="{Binding Detalle.Cantidad}"></Entry>
-            <Label Text="Valor a cobrar"/>
-            <Entry Text="{Binding Detalle.ValorTotal}"></Entry>
+            <Label Text="Nombres" FontFamily="calibril.ttf#Calibri Light"/>
+            <Entry Text="{Binding Detalle.NombreCliente}" FontFamily="calibril.ttf#Calibri Light"></Entry>
+            <Label Text="Dirección" FontFamily="calibril.ttf#Calibri Light"/>
+            <Entry Text="{Binding Direccion}" FontFamily="calibril.ttf#Calibri Light"></Entry>
+            <Label Text="Télefono" FontFamily="calibril.ttf#Calibri Light"/>
+            <Entry Text="{Binding Detalle.Telefono}" FontFamily="calibril.ttf#Calibri Light"></Entry>
+            <Label Text="Nro. de tanques a entregar" FontFamily="calibril.ttf#Calibri Light"/>
+            <Entry Text="{Binding Detalle.Cantidad}" FontFamily="calibril.ttf#Calibri Light"></Entry>
+            <Label Text="Valor a cobrar" FontFamily="calibril.ttf#Calibri Light"/>
+            <Entry Text="{Binding Detalle.ValorTotal}" FontFamily="calibril.ttf#Calibri Light"></Entry>
 
             <Button BorderRadius="30" 
                         Text="ENTREGAR" 
@@ -22,7 +22,9 @@
                         HorizontalOptions="Center" 
                         WidthRequest="200"  
                         HeightRequest="50" 
-                        BackgroundColor="Blue" 
+                        BackgroundColor="Blue"
+                    FontFamily="calibril.ttf#Calibri Light"
+                    FontSize="Large"
                         TextColor="White" 
                         Command="{Binding OkCommand}"/>
 

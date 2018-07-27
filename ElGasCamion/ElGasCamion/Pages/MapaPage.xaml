@@ -5,10 +5,10 @@
              xmlns:dsControl="clr-namespace:ElGasCamion.Controls"
              NavigationPage.HasNavigationBar="True"
              x:Class="ElGasCamion.Pages.MapaPage">
-    <ContentPage.ToolbarItems>
+    <!--<ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Text="Nº tanques vendidos" Priority="0" />
         <ToolbarItem Name="MenuItem1" Order="Primary" Text="{Binding Vendidos}" Priority="0" />
-    </ContentPage.ToolbarItems>
+    </ContentPage.ToolbarItems>-->
     <ContentPage.Content>
         
         <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -42,8 +42,8 @@
                                   >
             </dsControl:FilterMenu>
             <StackLayout BackgroundColor="Transparent" IsVisible="{Binding VerCompra}" Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Start" >
-                <Button Text="Aplicar" Command="{Binding AplicarCommand}" BorderRadius="30" BackgroundColor="#0072C6" TextColor="White"></Button>
-                <Button Text="No Aplicar" Command="{Binding NoAplicarCommand}" BorderRadius="30" BackgroundColor="#0072C6" TextColor="White"></Button>
+                <Button Text="Aplicar" Command="{Binding AplicarCommand}" FontFamily="calibril.ttf#Calibri Light" FontSize="Large" BorderRadius="30" BackgroundColor="#0072C6" TextColor="White"></Button>
+                <Button Text="No Aplicar" Command="{Binding NoAplicarCommand}" FontFamily="calibril.ttf#Calibri Light" FontSize="Large" BorderRadius="30" BackgroundColor="#0072C6" TextColor="White"></Button>
             </StackLayout>
 
         </Grid>

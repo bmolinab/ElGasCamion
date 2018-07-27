@@ -53,6 +53,8 @@ namespace ElGasCamion.Droid
 
                 SendNotification(msg);
 
+
+
             }
 
         }

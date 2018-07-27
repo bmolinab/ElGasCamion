@@ -69,6 +69,7 @@ namespace ElGasCamion.ViewModels
             {
                 await App.Current.MainPage.DisplayAlert("Entrega", "Pedido Entregado", "Aceptar");                
                 await App.Navigator.PopToRootAsync();
+
             }
             else
             {

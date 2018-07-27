@@ -12,6 +12,7 @@ using Android.Widget;
 using Android.Util;
 using WindowsAzure.Messaging;
 using Firebase.Iid;
+using Plugin.DeviceInfo;
 
 namespace ElGasCamion.Droid
 {
@@ -27,7 +28,6 @@ namespace ElGasCamion.Droid
             
                 var refreshedToken = FirebaseInstanceId.Instance.Token;
                 Log.Debug(TAG, "FCM token: " + refreshedToken);
-           Helpers.Settings.DeviceID = refreshedToken;
                 SendRegistrationToServer(refreshedToken);                     
         }
       
@@ -39,7 +39,10 @@ namespace ElGasCamion.Droid
                                       Constants.ListenConnectionString, this);
 
             var tags = new List<string>() {};
-            tags.Add("camion");
+            Helpers.Settings.DeviceID = CrossDeviceInfo.Current.Id;
+
+            tags.Add(Helpers.Settings.DeviceID);
+            tags.Add("distribuidor");
            
 
                 var regID = hub.Register(token, tags.ToArray()).RegistrationId;
