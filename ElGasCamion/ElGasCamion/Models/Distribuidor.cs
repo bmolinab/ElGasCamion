@@ -27,6 +27,8 @@ namespace ElGasCamion.Models
         public string IdAspNetUser { get; set; }
 
         public string DeviceID { get; set; }
+        public bool Habilitado { get; set; }
+
 
     }
 }

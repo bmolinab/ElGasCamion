@@ -129,6 +129,11 @@ namespace ElGasCamion.Services
             //antes de retornar el token debemos obtener el idDistribuidor
         }
 
+        /// <summary>
+        /// Tarea para enviar y almacenar la ruta que tiene el Distribuidor
+        /// </summary>
+        /// <param name="ruta"></param>
+        /// <returns></returns>
         public async Task<bool> LogRuta(Ruta ruta)
         {
             try
@@ -155,6 +160,14 @@ namespace ElGasCamion.Services
             }
         }
 
+        /// <summary>
+        /// Tarea para el método post, para el servicio api rest
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="model"></param>
+        /// <param name="baseAddress"></param>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public static async Task<Response> InsertarAsync<T>(T model, Uri baseAddress, string url)
         {
             try
@@ -183,7 +196,6 @@ namespace ElGasCamion.Services
                 };
             }
         }
-
         public static async Task<Response> InsertarAsync<T>(object model, Uri baseAddress, string url)
         {
             try

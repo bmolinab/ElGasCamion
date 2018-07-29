@@ -24,5 +24,7 @@ namespace ElGasCamion.Models
 
         public int? Calificacion { get; set; }
 
+
+
     }
 }
