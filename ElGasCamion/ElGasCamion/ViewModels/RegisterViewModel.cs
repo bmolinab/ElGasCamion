@@ -106,8 +106,9 @@ namespace ElGasCamion.ViewModels
                         {
                             if (Password.Length > 3)
                             {
+                                distribuidor.Habilitado = false;
                                 var isRegistered = await _apiServices.RegisterUserAsync
-
+                                
                                (Username, Password, ConfirmPassword, distribuidor);
 
                                 Settings.Username = Username;

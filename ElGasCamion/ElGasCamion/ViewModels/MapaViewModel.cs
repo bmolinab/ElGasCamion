@@ -29,7 +29,7 @@ namespace ElGasCamion.ViewModels
         public Compra compraresult = new Compra();
         public ObservableCollection<TKRoute> Routes { get; set; }
         ApiServices apiServices = new ApiServices();
-        public MapSpan centerSearch = null;
+        public MapSpan centerSearch = (MapSpan.FromCenterAndRadius((new TK.CustomMap.Position(0, 0)), Distance.FromMiles(.3)));
         public MapSpan CenterSearch
         {
             get { return centerSearch; }
@@ -127,7 +127,10 @@ namespace ElGasCamion.ViewModels
         bool tracking;
         public MapaViewModel()
         {
-            centerSearch = (MapSpan.FromCenterAndRadius((new TK.CustomMap.Position(0, 0)), Distance.FromMiles(.3)));
+            if (!VerCompra)
+            {
+                centerSearch = (MapSpan.FromCenterAndRadius((new TK.CustomMap.Position(0, 0)), Distance.FromMiles(.3)));
+            }
             Locations = new ObservableCollection<TKCustomMapPin>();
             locations = new ObservableCollection<TKCustomMapPin>();
             Routes = new ObservableCollection<TKRoute>();
@@ -175,7 +178,14 @@ namespace ElGasCamion.ViewModels
             var circle = new TKCircle { Radius = 700, Center = centro, Color = color};
             
             TkCircle.Add(circle);
+
+
             VerCompra = true;
+            //  CenterSearch = new MapSpan(centro, centro.Latitude, centro.Longitude);
+
+            CenterSearch = (MapSpan.FromCenterAndRadius((new TK.CustomMap.Position(centro.Latitude, centro.Longitude)), Distance.FromMiles(5)));
+
+
         }
 
         public string vendidos { get; set; }
@@ -210,7 +220,11 @@ namespace ElGasCamion.ViewModels
                     Debug.WriteLine("null gps :(");
                     return;
                 }
-                CenterSearch = (MapSpan.FromCenterAndRadius((new TK.CustomMap.Position(position.Latitude, position.Longitude)), Distance.FromMiles(1)));
+
+                if (!VerCompra)
+                {
+                    CenterSearch = (MapSpan.FromCenterAndRadius((new TK.CustomMap.Position(position.Latitude, position.Longitude)), Distance.FromMiles(1)));
+                }
                 if (tracking)
                 {
                     CrossGeolocator.Current.PositionChanged -= CrossGeolocator_Current_PositionChanged;
@@ -349,6 +363,14 @@ namespace ElGasCamion.ViewModels
                     TkCircle.Clear();
                     VerCompra = false;
                     EntregasPendientes();
+                }
+                else 
+                {
+                    Settings.VenderGas = false;
+                    Settings.IdCompra = 0;
+                    TkCircle.Clear();
+                    VerCompra = false;
+
                 }
 
                 // App.clienteseleccionado = null;
