@@ -38,23 +38,15 @@ namespace ElGasCamion.Droid
                 //Only used for debugging payloads sent from the Azure portal
                 string msg = message.Data["message"];
                 string tipo= message.Data["tipo"];
-                string idcompra = message.Data["idCompra"];
-                
-
+                string idcompra = message.Data["idCompra"];               
                 switch (tipo)
                 {
                     case "1":
                         Helpers.Settings.VenderGas = true;
                         Helpers.Settings.IdCompra = int.Parse(idcompra);
-
-
                     break;
                 }
-
                 SendNotification(msg);
-
-
-
             }
 
         }

@@ -49,6 +49,9 @@ namespace ElGasCamion.Droid
             }
           
            global::Xamarin.Forms.Forms.Init(this, bundle);
+
+            Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, bundle);
+
             LeoJHarris.FormsPlugin.Droid.EnhancedEntryRenderer.Init(this);
 
             Xamarin.FormsMaps.Init(this, bundle);

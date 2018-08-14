@@ -160,6 +160,33 @@ namespace ElGasCamion.Services
             }
         }
 
+        public async Task UpdatePosition(Ruta ruta)
+        {
+            try
+            {
+                var rutajson = new Rutav2 { Latitud = ruta.Latitud, Longitud = ruta.Longitud };
+                var json = JsonConvert.SerializeObject(rutajson);
+                var client = new HttpClient();
+                    var msg = new HttpRequestMessage(new HttpMethod("PATCH"), Constants.FirebaseURI+Settings.IdFireBase+".json");
+                    msg.Headers.Add("user-agent", Constants.USER_AGENT);
+                    if (json != null)
+                    {
+                        msg.Content = new StringContent(
+                            json,
+                            UnicodeEncoding.UTF8,
+                            "application/json");
+                    }
+
+              await  client.SendAsync(msg);
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex.Message);
+                throw;
+            }
+        }
+
+
         /// <summary>
         /// Tarea para el método post, para el servicio api rest
         /// </summary>

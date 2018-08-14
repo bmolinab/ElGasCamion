@@ -11,4 +11,15 @@ namespace ElGasCamion.Models
         public double? Longitud { get; set; }
         public double? Latitud { get; set; }
     }
+    public class Distribuidores
+    {
+        string id;
+
+    }
+
+    public partial class Rutav2
+    {
+        public double? Latitud { get; set; }
+        public double? Longitud { get; set; }
+    }
 }

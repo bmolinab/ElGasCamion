@@ -15,6 +15,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using TK.CustomMap;
 using TK.CustomMap.Api;
@@ -127,6 +128,7 @@ namespace ElGasCamion.ViewModels
         bool tracking;
         public MapaViewModel()
         {
+
             if (!VerCompra)
             {
                 centerSearch = (MapSpan.FromCenterAndRadius((new TK.CustomMap.Position(0, 0)), Distance.FromMiles(.3)));
@@ -134,7 +136,7 @@ namespace ElGasCamion.ViewModels
             Locations = new ObservableCollection<TKCustomMapPin>();
             locations = new ObservableCollection<TKCustomMapPin>();
             Routes = new ObservableCollection<TKRoute>();
-          
+
             vendidos = "";
             //  Vendidos = "12";
 
@@ -143,8 +145,15 @@ namespace ElGasCamion.ViewModels
 
                 dondeVender();
             }
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                await loadParametros();
+            });
+
+                myposition();
+
            
-            myposition();
+
             EntregasPendientes();
         }
 
@@ -161,6 +170,14 @@ namespace ElGasCamion.ViewModels
             //Do whatever you like in here
 
         }
+
+
+
+        public void ActualizaFirebase()
+        {
+           
+        }
+
 
 
         public async void dondeVender()
@@ -205,6 +222,46 @@ namespace ElGasCamion.ViewModels
             }
         }
 
+
+        public async Task<bool> loadParametros()
+        {
+            Cliente cliente = new Cliente
+            {
+                IdCliente = Settings.IdDistribuidor,
+            };
+
+            var response = await ApiServices.InsertarAsync<Cliente>(cliente, new Uri(Constants.BaseApiAddress), "/api/Parametroes/GetAllParameters");
+            var parametros = JsonConvert.DeserializeObject<List<Parametro>>(response.Result.ToString());
+            if (parametros != null)
+
+            {
+                bool Actualizado = true;
+                foreach (var item in parametros)
+                {
+                  
+                    if (item.Nombre == "versioncamion")
+                    {
+                        if (Constants.VersionCamion >= item.Valor)
+                        {
+                            Actualizado = true;
+                        }
+                        else
+                        {
+                            Actualizado = false;
+                        }
+                    }
+                }
+                if (!Actualizado) await App.Navigator.PushAsync(new UpdatePage());
+
+
+            }
+            return true;
+
+
+        }
+
+
+
         public async void myposition()
         {
             try
@@ -225,38 +282,19 @@ namespace ElGasCamion.ViewModels
                 {
                     CenterSearch = (MapSpan.FromCenterAndRadius((new TK.CustomMap.Position(position.Latitude, position.Longitude)), Distance.FromMiles(1)));
                 }
-                if (tracking)
-                {
-                    CrossGeolocator.Current.PositionChanged -= CrossGeolocator_Current_PositionChanged;
-                    CrossGeolocator.Current.PositionError -= CrossGeolocator_Current_PositionError;
-                }
-                else
-                {
-                    CrossGeolocator.Current.PositionChanged += CrossGeolocator_Current_PositionChanged;
-                    CrossGeolocator.Current.PositionError += CrossGeolocator_Current_PositionError;
-                }             
-                if (CrossGeolocator.Current.IsListening)
-                {
-                    await CrossGeolocator.Current.StopListeningAsync();
-                    //labelGPSTrack.Text = "Stopped tracking";
-                    //ButtonTrack.Text = "Start Tracking";
-                    tracking = false;
-                    //count = 0;
-                }
-                else
-                {
-                    // Positions.Clear();
-                    if (await CrossGeolocator.Current.StartListeningAsync(TimeSpan.FromSeconds(30), 1,
-                        false, new ListenerSettings
-                        {
 
-                        }))
-                    {
-                        //labelGPSTrack.Text = "Started tracking";
-                        //ButtonTrack.Text = "Stop Tracking";
-                        tracking = true;
-                    }
+                //    CrossGeolocator.Current.PositionChanged += CrossGeolocator_Current_PositionChanged;
+                //    CrossGeolocator.Current.PositionError += CrossGeolocator_Current_PositionError;
+
+                //if (await CrossGeolocator.Current.StartListeningAsync(TimeSpan.FromSeconds(20), 1,                       
+                locator.PositionChanged += CrossGeolocator_Current_PositionChanged;
+                if (!locator.IsListening)
+                {
+                    Debug.WriteLine("StartListeningAsync");
+                    await locator.StartListeningAsync(TimeSpan.FromMinutes(5), 30);
                 }
+
+
             }
             catch (Exception ex)
             {
@@ -279,7 +317,7 @@ namespace ElGasCamion.ViewModels
             {
                 var Pindistribuidor = new TKCustomMapPin
                 {
-                    Image = "pincliente",
+                    Image = "casa",
                     Position = new TK.CustomMap.Position((double)cliente.Latitud, (double)cliente.Longitud),
                     Title = cliente.NombreCliente + "",
                     Subtitle ="Nro tanques: "+ cliente.Cantidad,
@@ -326,6 +364,7 @@ namespace ElGasCamion.ViewModels
                         Color = Color.Blue,    
                         LineWidth=5
                     };
+
                     Routes.Add(route);
                     Debug.WriteLine(route.Distance);
                     Routes.Count();
@@ -382,6 +421,8 @@ namespace ElGasCamion.ViewModels
         }
 
         public ICommand NoAplicarCommand { get { return new RelayCommand(noaplicarCommand); } }
+
+
         public async void noaplicarCommand()
         {
             try
@@ -405,16 +446,34 @@ namespace ElGasCamion.ViewModels
 
         void CrossGeolocator_Current_PositionChanged(object sender, PositionEventArgs e)
         {
-            Device.BeginInvokeOnMainThread(async() =>
+           
+              
+
+            Device.BeginInvokeOnMainThread(async () =>
             {
+                await apiServices.UpdatePosition(new Ruta
+                {
+                    IdDistribuidor = Settings.IdDistribuidor,
+                    Latitud = e.Position.Latitude,
+                    Longitud = e.Position.Longitude,
+
+                });
+
                 await apiServices.LogRuta(new Ruta
                 {
                     IdDistribuidor = Settings.IdDistribuidor,
                     Latitud = e.Position.Latitude,
-                    Longitud = e.Position.Longitude,  
-                    
+                    Longitud = e.Position.Longitude,
+
                 });
+
+
             });
+
+
+
+
+
         }
     }
 }
