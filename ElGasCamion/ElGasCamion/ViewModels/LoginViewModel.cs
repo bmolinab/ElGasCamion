@@ -15,6 +15,20 @@ namespace ElGasCamion.ViewModels
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
+
+        #region Constructor
+
+        ICommand tapCommand;
+
+        public LoginViewModel()
+        {
+            Username = Settings.Username;
+            Password = Settings.Password;
+            tapCommand = new Command(OnTapped);
+        }
+        #endregion
+      
+
         #region Services
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly ApiServices _apiServices = new ApiServices();
@@ -41,9 +55,28 @@ namespace ElGasCamion.ViewModels
         public string Username { get; set; }
         public string Password { get; set; }
 
-        
+
         #endregion
         #region Commands
+
+        public ICommand RegisterCommand { get { return new RelayCommand(Register); } }
+        private async void Register()
+        {
+            await Application.Current.MainPage.Navigation.PushAsync(new RegisterPage());
+        }
+
+       
+        public ICommand TapCommand
+        {
+            get { return tapCommand; }
+        }
+
+        private async void OnTapped(object s)
+        {
+
+            await Application.Current.MainPage.Navigation.PushAsync(new RegisterPage());
+        }
+
         public ICommand LoginCommand
         {
             get
@@ -69,24 +102,10 @@ namespace ElGasCamion.ViewModels
                 });
             }
         }
-
-
-        public ICommand RegisterCommand { get { return new RelayCommand(Register); } }
-
-        private async void Register()
-        {
-            App.Current.MainPage = new NavigationPage(new RegisterPage());
-        }
-
+        
         #endregion
 
 
-        #region Constructor
-        public LoginViewModel()
-        {
-            Username = Settings.Username;
-            Password = Settings.Password;
-        }
-        #endregion
+      
     }
 }

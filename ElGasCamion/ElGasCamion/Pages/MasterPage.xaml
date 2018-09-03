@@ -11,12 +11,9 @@
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
         <NavigationPage x:Name="Navigator" >
-           
             <x:Arguments>
                 <pages:MapaPage></pages:MapaPage>
             </x:Arguments>
         </NavigationPage>
     </MasterDetailPage.Detail>
-
-
 </MasterDetailPage>

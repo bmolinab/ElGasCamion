@@ -22,8 +22,6 @@ namespace ElGasCamion.Pages
             BindingContext = viewModel;          
         }
 
-        
-
         protected override void OnAppearing()
         {
            // base.OnAppearing();
