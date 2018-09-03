@@ -110,6 +110,17 @@ namespace ElGasCamion.Helpers
             }
         }
 
+        public static string IdFireBase
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault("IdFireBase", "");
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue("IdFireBase", value);
+            }
+        }
 
     }
 

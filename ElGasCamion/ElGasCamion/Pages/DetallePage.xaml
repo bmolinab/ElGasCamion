@@ -16,7 +16,12 @@
             <Label Text="Valor a cobrar" FontFamily="calibril.ttf#Calibri Light"/>
             <Entry Text="{Binding Detalle.ValorTotal}" FontFamily="calibril.ttf#Calibri Light"></Entry>
 
-            <Button BorderRadius="30" 
+            <StackLayout Orientation="Horizontal"
+                         VerticalOptions="End" 
+                         HorizontalOptions="Center" 
+                         >
+
+                <Button BorderRadius="30" 
                         Text="ENTREGAR" 
                         VerticalOptions="End" 
                         HorizontalOptions="Center" 
@@ -27,7 +32,18 @@
                     FontSize="Large"
                         TextColor="White" 
                         Command="{Binding OkCommand}"/>
-
+                <Button BorderRadius="30" 
+                        Text="CANCELAR PEDIDO" 
+                        VerticalOptions="End" 
+                        HorizontalOptions="Center" 
+                        WidthRequest="200"  
+                        HeightRequest="50" 
+                        BackgroundColor="Blue"
+                    FontFamily="calibril.ttf#Calibri Light"
+                    FontSize="Large"
+                        TextColor="White" 
+                        Command="{Binding CancelCommand}"/>
+            </StackLayout>
             <!--<Button BorderRadius="30" 
                         Text="CANCELAR" 
                         VerticalOptions="End" 

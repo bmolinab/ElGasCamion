@@ -76,5 +76,42 @@ namespace ElGasCamion.ViewModels
                     await App.Current.MainPage.DisplayAlert("Tenemos un problema con su pedido", response.Message, "Aceptar");
             }           
         }
+
+
+        public ICommand CancelCommand { get { return new RelayCommand(Cancel); } }
+        public async void Cancel()
+        {
+
+            var action = await App.Current.MainPage.DisplayAlert("Pedido a Cancelar", string.Format("{0} Tanque(s)", Detalle.Cantidad), "Confirmar", "Regresar");
+            if (action)
+            {
+                var compra = new Compra { IdCompra = Settings.IdCompra, IdDistribuidor = Settings.IdDistribuidor };
+                var compracancelada = new CompraCancelada
+                {
+                    IdCompra = Detalle.IdCompra,
+                    IdDistribuidor = Settings.IdDistribuidor,
+                    CanceladaPor = 2,
+                    IdCliente = (int)Detalle.IdCliente
+                };
+                var response = await ApiServices.InsertarAsync<CompraCancelada>(compracancelada, new Uri(Constants.BaseApiAddress), "/api/Compras/Cancelar");
+                if (response.IsSuccess)
+                {
+                    await App.Current.MainPage.DisplayAlert("Pedido a Cancelar", string.Format("Su pedido de {0} tanque(s) ha sido cancelado", Detalle.Cantidad), "Aceptar");
+                    await App.Navigator.Navigation.PopToRootAsync();
+                }
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert("Problemas", string.Format("Tenemos problemas para cancelarsu pedido de {0} tanque(s), trabajamos para solucionarlo", Detalle.Cantidad), "Aceptar");
+                    //Settear las variables globales              
+                    await App.Navigator.Navigation.PopToRootAsync();
+                }
+
+
+
+            }
+
+        }
+
+
     }
 }

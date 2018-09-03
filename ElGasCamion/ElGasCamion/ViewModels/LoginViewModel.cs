@@ -94,8 +94,9 @@ namespace ElGasCamion.ViewModels
                         var response = await ApiServices.InsertarAsync<Distribuidor>(d, new System.Uri(Constants.BaseApiAddress), "/api/Distribuidors/GetDistribuidorData");
                         var cliente = JsonConvert.DeserializeObject<Distribuidor>(response.Result.ToString());
                         Settings.IdDistribuidor = cliente.IdDistribuidor;
+                        Settings.IdFireBase = cliente.FirebaseID;
 
-                        App.Current.MainPage = new NavigationPage(new MapaPage());
+                        App.Current.MainPage = new NavigationPage(new MasterPage());
 
                     }
 

@@ -7,8 +7,10 @@
              x:Class="ElGasCamion.Pages.RegisterPage">
 
     <ContentPage.Content>
-        <StackLayout Margin="3" Padding="3">
+        <ScrollView>
 
+            <StackLayout Margin="3" Padding="3">
+                
             <enhancedEntry:EnhancedEntry BorderColor="#0072C6" BorderWidth="2" LeftIcon="email" CornerRadius="2" Placeholder="Correo" Keyboard="Email" FontFamily="calibril.ttf#Calibri Light"   Text="{Binding Username}" Margin="5,3,5,3"></enhancedEntry:EnhancedEntry>
             <enhancedEntry:EnhancedEntry BorderColor="#0072C6" LeftIcon="lastpass" Text="{Binding Password}" BorderWidth="2" CornerRadius="2" IsPassword="True"  Placeholder="Contraseña"  FontFamily="calibril.ttf#Calibri Light"     Margin="5,3,5,3"></enhancedEntry:EnhancedEntry>
             <enhancedEntry:EnhancedEntry BorderColor="#0072C6" LeftIcon="lastpass" Text="{Binding ConfirmPassword}" BorderWidth="2" CornerRadius="2" IsPassword="True"  Placeholder="Confirmar contraseña"  FontFamily="calibril.ttf#Calibri Light"  Margin="5,3,5,3"></enhancedEntry:EnhancedEntry>
@@ -56,6 +58,7 @@
             </ActivityIndicator>
 
         </StackLayout>
+        </ScrollView>
 
     </ContentPage.Content>
 

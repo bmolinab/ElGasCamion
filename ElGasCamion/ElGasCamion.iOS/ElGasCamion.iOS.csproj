@@ -162,6 +162,9 @@
     <PackageReference Include="Plugin.Permissions">
       <Version>3.0.0.12</Version>
     </PackageReference>
+    <PackageReference Include="Plugin.Share">
+      <Version>7.1.1</Version>
+    </PackageReference>
     <PackageReference Include="TK.CustomMap">
       <Version>2.0.1</Version>
     </PackageReference>
